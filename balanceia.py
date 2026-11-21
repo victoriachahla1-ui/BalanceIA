@@ -198,8 +198,10 @@ def diagnostico_texto(nombre, sector, b, tabla, prob, z):
     if r["liquidez_corriente"] < 1:
         t.append(f"Liquidez: el activo corriente no alcanza a cubrir las deudas de corto plazo (liquidez corriente {r['liquidez_corriente']:.2f}); "
                  f"hay un capital de trabajo negativo de $ {-bb['capital_trabajo']:,.0f} M.")
-    elif r["liquidez_corriente"] < 1.5 or r["prueba_acida"] < 0.8:
-        t.append(f"Liquidez: ajustada (liquidez corriente {r['liquidez_corriente']:.2f}); sin vender inventario solo cubre {100*r['prueba_acida']:.0f}% de las deudas de corto plazo (prueba ácida {r['prueba_acida']:.2f}).")
+    elif r["liquidez_corriente"] < 1.5:
+        t.append(f"Liquidez: ajustada (liquidez corriente {r['liquidez_corriente']:.2f}); sin vender inventario cubre {100*r['prueba_acida']:.0f}% de las deudas de corto plazo (prueba ácida {r['prueba_acida']:.2f}).")
+    elif r["prueba_acida"] < 0.8:
+        t.append(f"Liquidez: holgada en total (liquidez corriente {r['liquidez_corriente']:.2f}), pero depende del inventario: sin venderlo cubre solo {100*r['prueba_acida']:.0f}% de las deudas de corto plazo (prueba ácida {r['prueba_acida']:.2f}).")
     else:
         t.append(f"Liquidez: holgada (liquidez corriente {r['liquidez_corriente']:.2f}, prueba ácida {r['prueba_acida']:.2f}).")
     if pd.isna(r["endeudamiento"]):
