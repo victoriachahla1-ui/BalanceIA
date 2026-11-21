@@ -60,16 +60,18 @@ sector_ej, valores = EJEMPLOS[ej]
 nombre = st.sidebar.text_input("Nombre de la empresa", "" if ej.startswith("Cargar") else ej.split(" (")[0])
 sector = st.sidebar.selectbox("Sector", SECTORES, index=SECTORES.index(sector_ej))
 archivo = st.sidebar.file_uploader("…o subí un CSV con las partidas", type=["csv"])
+origen = ""
 if archivo is not None:
     valores = pd.read_csv(archivo).iloc[0][PARTIDAS].astype(float).to_dict()
+    origen = archivo.name
 st.sidebar.caption("Valores en millones de $")
 b = {}
 with st.sidebar.expander("Estado de situación patrimonial", expanded=False):
     for k in PARTIDAS[:7]:
-        b[k] = st.number_input(ETIQUETAS[k], value=float(valores[k]), step=10.0, key=f"{ej}{k}")
+        b[k] = st.number_input(ETIQUETAS[k], value=float(valores[k]), step=10.0, key=f"{ej}{origen}{k}")
 with st.sidebar.expander("Estado de resultados", expanded=False):
     for k in PARTIDAS[7:]:
-        b[k] = st.number_input(ETIQUETAS[k], value=float(valores[k]), step=10.0, key=f"{ej}{k}")
+        b[k] = st.number_input(ETIQUETAS[k], value=float(valores[k]), step=10.0, key=f"{ej}{origen}{k}")
 
 st.title("📊 BalanceIA")
 st.write("Diagnóstico financiero automático de estados contables: ratios, comparación con el sector, "
