@@ -1,0 +1,9 @@
+pandas
+numpy
+matplotlib
+statsmodels
+scipy
+scikit-learn
+streamlit
+# opcional para el diagnóstico con LLM:
+# anthropic
